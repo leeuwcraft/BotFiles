@@ -1,0 +1,270 @@
+{
+  "command": [
+    {
+      "name": "help",
+      "actions": [
+        {
+          "name": "help menu",
+          "category": "Message",
+          "type": "Send Embed",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "2EF8FF",
+          "title": "Help menu",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "commands:\n!Help: type !help to recieve  help\n!Info: type !info to see info",
+          "thumbnail": "",
+          "image": "",
+          "footer": "",
+          "timestamp": "false",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    },
+    {
+      "name": "info",
+      "actions": [
+        {
+          "name": "show info",
+          "category": "Message",
+          "type": "Send Message",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "messagetext": "\n\n\nCommand Author: ${dbsVars.CommandAuthor.displayName}\nserver:  ${dbsVars.guild.name}\nmembers: ${dbsVars.guild.memberCount}\nowner: ${dbsVars.guild.ownerID}\nserver icon: ${dbsVars.guild.iconURL}\n<@${dbsVars.CommandAuthor.id}>",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    },
+    {
+      "name": "ban",
+      "perms": [],
+      "actions": [
+        {
+          "name": "get user to ban",
+          "category": "Variable",
+          "type": "Get Mentioned User",
+          "messageActionRows": [],
+          "varname": "getuserban",
+          "vartype": "User",
+          "savevartype": "temp"
+        },
+        {
+          "name": "get reason for ban",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "messageActionRows": [],
+          "varname": "getbanreason",
+          "vartype": "Text",
+          "savevartype": "temp",
+          "param": "0"
+        },
+        {
+          "name": "ban user",
+          "category": "User Action",
+          "type": "Ban User",
+          "messageActionRows": [],
+          "user": "${tempVars.getuserban.id}",
+          "reason": "${tempVars.getbanreason}",
+          "days": ""
+        }
+      ]
+    },
+    {
+      "name": "kick",
+      "perms": [],
+      "actions": [
+        {
+          "name": "user to ban",
+          "category": "Variable",
+          "type": "Get Mentioned User",
+          "messageActionRows": [],
+          "varname": "getuserban",
+          "vartype": "User",
+          "savevartype": "temp"
+        },
+        {
+          "name": "get reason",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "messageActionRows": [],
+          "varname": "getreason",
+          "vartype": "Text",
+          "savevartype": "temp",
+          "param": "0"
+        },
+        {
+          "name": "kick user",
+          "category": "User Action",
+          "type": "Kick User",
+          "messageActionRows": [],
+          "user": "${tempVars.getuserban.id}",
+          "reason": "${tempVars.getreason}"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "perms": [],
+      "actions": [
+        {
+          "name": "getbotstatus",
+          "category": "Variable",
+          "type": "Store Value in Variable",
+          "messageActionRows": [],
+          "varname": "botactivity",
+          "vartype": "Text",
+          "savevartype": "temp",
+          "param": "0"
+        },
+        {
+          "name": "setactivity",
+          "category": "Bot Action",
+          "type": "Set Bot Activity",
+          "messageActionRows": [],
+          "activityname": "${tempVars.botactivity}",
+          "activitytype": "PLAYING",
+          "streamurl": ""
+        }
+      ]
+    },
+    {
+      "name": "application",
+      "perms": [],
+      "actions": [
+        {
+          "name": "make application channel",
+          "category": "Channel Action",
+          "type": "Create Channel",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandAuthor.displayName}s-application",
+          "chancategory": ".",
+          "reason": "",
+          "channeltype": "Text",
+          "savetovariable": "new_ticket_channel",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "application open",
+          "category": "Message",
+          "type": "Send Message",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "messagetext": "${dbsVars.CommandAuthor.displayName} your application is opened ",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "add channel permissions",
+          "category": "Channel Action",
+          "type": "Update Channel Permissions",
+          "messageActionRows": [],
+          "channelname": "${tempVars.new_ticket_channel.id}",
+          "permid": "${dbsVars.guild.id}",
+          "permissions": [
+            "VIEW_CHANNEL",
+            "SEND_MESSAGES"
+          ],
+          "allow": "Deny"
+        },
+        {
+          "name": "add user to channel",
+          "category": "Channel Action",
+          "type": "Update Channel Permissions",
+          "messageActionRows": [],
+          "channelname": "${tempVars.new_ticket_channel.id}",
+          "permid": "${dbsVars.CommandAuthor.id}",
+          "permissions": [],
+          "allow": "Allow"
+        },
+        {
+          "name": "send message",
+          "category": "Message",
+          "type": "Send Message",
+          "messageActionRows": [
+            {
+              "rowtype": "button",
+              "buttons": [
+                {
+                  "label": "close aplication",
+                  "customid": "close_application",
+                  "style": "PRIMARY",
+                  "emoji": "",
+                  "URL": "",
+                  "ephemeral": false
+                }
+              ]
+            }
+          ],
+          "channelname": "${tempVars.new_ticket_channel.id}",
+          "messagetext": "thanks for making an application please enter your application here.\nplease make sure to @ mention one of the application reviewers such as @bevergames or @try_hard_ninja\n<@${dbsVars.CommandAuthor.id}>",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    },
+    {
+      "name": "pingsquad",
+      "actions": [
+        {
+          "name": "pingsquader",
+          "category": "Message",
+          "type": "Send Embed",
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "C812FF",
+          "title": "Get notified",
+          "url": "",
+          "authorname": "",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "Hit the 🔔 below to get notified when important announcment are made in #announcements\n\nhit the ❌ to get rid of the announcement role",
+          "thumbnail": "",
+          "image": "",
+          "footer": "",
+          "timestamp": "false",
+          "savetovariable": "notificationsquadder",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "listener",
+          "category": "Reaction",
+          "type": "Add Reaction Listener",
+          "reactionActions": {
+            "🔔": [
+              {
+                "name": "add pingsquad",
+                "category": "User Action",
+                "type": "Add Role to User",
+                "messageActionRows": [],
+                "user": "${tempVars.reactionuser.id}",
+                "rolename": "ping squad"
+              }
+            ],
+            "❌": [
+              {
+                "name": "remove pingsquad",
+                "category": "User Action",
+                "type": "Remove Role From User",
+                "messageActionRows": [],
+                "user": "${tempVars.reactionuser.id}",
+                "rolename": "ping squad",
+                "reason": "requested ping squad removal"
+              }
+            ]
+          },
+          "messageActionRows": [],
+          "message": "${tempVars.notificationsquadder.id}",
+          "duration": "0",
+          "reactionemoji": "reactionemoji",
+          "reactionuser": "reactionuser",
+          "react": "BOOL_TRUE@@"
+        }
+      ]
+    }
+  ]
+}
